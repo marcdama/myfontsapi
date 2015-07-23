@@ -14,22 +14,24 @@ parser = reqparse.RequestParser()
 parser.add_argument('task', type=str)
 
 
-class Top(Resource):
-        def get(self, table, tag):
-            count = {}
-            counter = 0
-            for i in db[table].find():
-                if not i[tag] in count:
-                    count[i[tag]] = {}
-                    count[i[tag]]['total'] = 1
-                else:
-                    count[i[tag]]['total'] += 1
-                    count[i[tag]]['designer'] = i['designer']
-                    count[i[tag]]['name'] = i['name']
-                    count[i[tag]]['font_url'] = i['font_url']
-            return count
+class Count(Resource):
+        def get(self, table, tag, time):
+            t = {
+            'hour': 1,
+            'day': 24,
+            'week': 168,
+            'month': 744,
+            'year': 8760
+            }
 
-api.add_resource(Top, '/<table>=<tag>')
+            g = Counter(i[tag] for i in db[table].find())
+
+            l = []
+            for i in g:
+                l.append({'name': i, 'total': int(g[i]) / float(t[time])})
+            return l
+
+api.add_resource(Count, '/<table>=<tag>=<time>')
 
 if __name__ == '__main__':
     app.run()
