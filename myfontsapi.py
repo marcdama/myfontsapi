@@ -31,7 +31,13 @@ class Count(Resource):
                 l.append({'name': i, 'total': int(g[i]) / float(t[time])})
             return l
 
+
+class Test(Resource):
+    def get(self, tag):
+        return tag
+
 api.add_resource(Count, '/<table>=<tag>=<time>')
+api.add_resource(Test, '<tag>')
 
 if __name__ == '__main__':
     app.run()
