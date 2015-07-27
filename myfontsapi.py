@@ -32,12 +32,22 @@ class Count(Resource):
             return l
 
 
-class Test(Resource):
-    def get(self):
-        return 'chicken'
+class Track(Resource):
+    def get(self, table):
 
-api.add_resource(Count, '/<table>=<tag>=<time>')
-api.add_resource(Test, '/chicken')
+        font_track = {}
+
+        for i in db[table].find():
+            if not i['name'] in font_track:
+                font_track[i['name']] = {}
+                font_track[i['name']][i['date']] = i['rank']
+            else:
+                font_track[i['name']][i['date']] = i['rank']
+        return font_track
+
+
+api.add_resource(Count, '/count/<table>=<tag>=<time>')
+api.add_resource(Track, '/track/<table>')
 
 if __name__ == '__main__':
     app.run()
