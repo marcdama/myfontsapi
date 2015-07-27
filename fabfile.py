@@ -6,7 +6,7 @@ APP_NAME = 'myfontsapi'
 PROJECT_DIR = '/var/www/myfontsapi'
 WSGI_SCRIPT = 'application.wsgi'
 
-env.hosts = ["%s@%	s" % (USERNAME, SERVER)]
+env.hosts = ["%s@%s" % (USERNAME, SERVER)]
 
 def deploy():
     with cd(PROJECT_DIR):
