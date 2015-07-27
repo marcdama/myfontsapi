@@ -33,11 +33,11 @@ class Count(Resource):
 
 
 class Test(Resource):
-    def get(self, tag):
-        return tag
+    def get(self):
+        return 'chicken'
 
 api.add_resource(Count, '/<table>=<tag>=<time>')
-api.add_resource(Test, '<tag>')
+api.add_resource(Test, '/chicken')
 
 if __name__ == '__main__':
     app.run()
