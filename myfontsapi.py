@@ -3,6 +3,7 @@ from flask_restful import reqparse, Api, Resource
 from pymongo import MongoClient
 from bson.json_util import dumps
 from collections import Counter
+import json
 
 app = Flask(__name__)
 api = Api(app)
@@ -51,8 +52,20 @@ class Track(Resource):
         return l
 
 
+class Fonts(Resource):
+    def get(self, table):
+
+        fonts = {}
+
+        for i in db[table].find():
+            if not i['name'] in fonts:
+                fonts[i['name']] = i
+        return json.loads(dumps([fonts[i] for i in fonts]))
+
+
 api.add_resource(Count, '/count/<table>=<tag>=<time>')
 api.add_resource(Track, '/track/<table>')
+api.add_resource(Fonts, '/fonts/<table>')
 
 if __name__ == '__main__':
     app.run()
