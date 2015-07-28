@@ -2,3 +2,4 @@
 flask
 log
 test_queries.py
+fabfile.pyc

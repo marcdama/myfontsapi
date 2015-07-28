@@ -43,7 +43,12 @@ class Track(Resource):
                 font_track[i['name']][i['date']] = i['rank']
             else:
                 font_track[i['name']][i['date']] = i['rank']
-        return font_track
+
+        l = []
+        for i in font_track:
+            l.append({'name': i,
+                      'date': font_track[i]})
+        return l
 
 
 api.add_resource(Count, '/count/<table>=<tag>=<time>')
