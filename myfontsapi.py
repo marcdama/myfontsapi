@@ -70,16 +70,20 @@ class Summary(Resource):
         d['total_fonts'] = len(set([i['name'] for i in db[table].find()]))
         d['total_designers'] = len(set([i['designer'] for i in db[table].find()]))
 
-        #get average cost
-        w_cost = []
-        for i in db[table].find():
-            if len(i['rrp_cost']) == 1:
-                w_cost.append(i['rrp_cost'])
-            else:
-                w_cost.append(i['rrp_cost'][1:])
-        q = sum(len(i) for i in w_cost)
-        t = sum(float(i.replace(",",".")) for a in w_cost for i in a)
-        d['avg_cost'] = t / q
+        #average cost
+        def avg_cost(tag):
+            w_cost = []
+            for i in db[table].find():
+                if len(i[tag]) == 1:
+                    w_cost.append(i[tag])
+                else:
+                    w_cost.append(i[tag][1:])
+
+            q = sum(len(i) for i in w_cost)
+            t = sum(float(i.replace(",",".")) for a in w_cost for i in a)
+            return t / q
+
+        d['average_cost_per_weight'] = avg_cost('rrp_cost')
         return d
 
 
