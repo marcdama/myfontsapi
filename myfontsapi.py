@@ -63,9 +63,30 @@ class Fonts(Resource):
         return json.loads(dumps([fonts[i] for i in fonts]))
 
 
+class Summary(Resource):
+    def get(self, table):
+
+        d = {}
+        d['total_fonts'] = len(set([i['name'] for i in db[table].find()]))
+        d['total_designers'] = len(set([i['designer'] for i in db[table].find()]))
+
+        #get average cost
+        w_cost = []
+        for i in db[table].find():
+            if len(i['rrp_cost']) == 1:
+                w_cost.append(i['rrp_cost'])
+            else:
+                w_cost.append(i['rrp_cost'][1:])
+        q = sum(len(i) for i in w_cost)
+        t = sum(float(i.replace(",",".")) for a in w_cost for i in a)
+        d['avg_cost'] = t / q
+        return d
+
+
 api.add_resource(Count, '/count/<table>=<tag>=<time>')
 api.add_resource(Track, '/track/<table>')
 api.add_resource(Fonts, '/fonts/<table>')
+api.add_resource(Summary, '/summary/<table>')
 
 if __name__ == '__main__':
     app.run()
