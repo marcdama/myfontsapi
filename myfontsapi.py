@@ -67,7 +67,7 @@ class Summary(Resource):
     def get(self, table):
 
         d = {}
-        d['total_fonts'] = len(set([i['name'] for i in db[table].find()]))
+        d['total_families'] = len(set([i['name'] for i in db[table].find()]))
         d['total_designers'] = len(set([i['designer'] for i in db[table].find()]))
 
         #average cost
@@ -84,6 +84,7 @@ class Summary(Resource):
             return t / q
 
         d['average_cost_per_weight'] = avg_cost('rrp_cost')
+        d['designers'] = list(set(i['designer'] for i in db[table].find()))
         return d
 
 
