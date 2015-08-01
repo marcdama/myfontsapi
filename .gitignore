@@ -3,3 +3,4 @@ flask
 log
 test_queries.py
 fabfile.pyc
+db_clean_up.py
