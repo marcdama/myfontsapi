@@ -41,9 +41,9 @@ class Track(Resource):
         for i in db[table].find():
             if not i['name'] in font_track:
                 font_track[i['name']] = {}
-                font_track[i['name']][i['date']] = int(i['rank'])
+                font_track[i['name']][i['date']+'-'+i['time']] = int(i['rank'])
             else:
-                font_track[i['name']][i['date']] = int(i['rank'])
+                font_track[i['name']][i['date']+'-'+i['time']] = int(i['rank'])
 
         l = []
         for i in font_track:
