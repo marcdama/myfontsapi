@@ -81,7 +81,7 @@ class Summary(Resource):
 
             q = sum(len(i) for i in w_cost)
             t = sum(float(i.replace(",",".")) for a in w_cost for i in a)
-            return t / q
+            return format(t / q, '.2f')
 
         d['average_cost_per_weight'] = avg_cost('rrp_cost')
         d['designers'] = list(set(i['designer'] for i in db[table].find()))
