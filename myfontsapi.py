@@ -70,7 +70,7 @@ class Summary(Resource):
         d['total_families'] = len(set([i['name'] for i in db[table].find()]))
         d['total_designers'] = len(set([i['designer'] for i in db[table].find()]))
 
-        #average cost
+        #avercage cost
         def avg_cost(tag):
             w_cost = []
             for i in db[table].find():
