@@ -36,16 +36,15 @@ class Count(Resource):
 class Track(Resource):
     def get(self, table, tag):
 
-        font_track = {}
+        font_track = {'name': tag}
 
         for i in db[table].find({'name': tag}):
             if not tag in font_track:
-                font_track[tag] = {}
-                font_track[tag][i['date']+'-'+i['time']] = int(i['rank'])
+                font_track[i['date']+'-'+i['time']] = int(i['rank'])
             else:
-                font_track[tag][i['date']+'-'+i['time']] = int(i['rank'])
+                font_track[i['date']+'-'+i['time']] = int(i['rank'])
 
-        return str(font_track)
+        return font_track
 
 
 class Fonts(Resource):
